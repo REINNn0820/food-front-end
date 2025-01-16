@@ -6,20 +6,20 @@ type CategoryType = {
   _id: number;
 };
 
-export default function Home() {
+export function Categories() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
-  const addCategory = async() => {
-    const response = await fetch('http://localhost:5000/food-category', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
+  const addCategory = async () => {
+    const response = await fetch("http://localhost:5000/food-category", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({categoryName:'New category'})
-  });
-    const data = await response.json()
-    setCategories([...categories, data.newItem])
-  }
+      body: JSON.stringify({ categoryName: "New category" }),
+    });
+    const data = await response.json();
+    setCategories([...categories, data.newItem]);
+  };
 
   async function fetchAll() {
     const res = await fetch(`http://localhost:5000/food-category`, {

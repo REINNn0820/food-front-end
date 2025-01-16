@@ -1,10 +1,8 @@
-"use client";
+import { Categories } from "./_components/Categories";
 
-import Categories from "./Categories";
-
-export default function Home() {
+export default function Page() {
   return (
-    <div className="">
+    <div>
       <Categories />
     </div>
   );
