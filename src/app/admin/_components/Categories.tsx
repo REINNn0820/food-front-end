@@ -41,7 +41,6 @@ export function Categories() {
       {categories?.map((category) => (
         <div key={category._id}>{category.categoryName}</div>
       ))}
-      <button>ADD NEW</button>
     </div>
   );
 }
