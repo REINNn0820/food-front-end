@@ -1,4 +1,3 @@
-import { Navigation } from "./_components/Navigation";
 
 export default function RootLayout({
   children,
@@ -7,7 +6,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="bg-muted h-screen flex gap-6  ">
-      <Navigation />
+     
       {children}
     </div>
   );

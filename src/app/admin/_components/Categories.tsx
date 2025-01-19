@@ -10,7 +10,7 @@ export function Categories() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const addCategory = async () => {
-    const response = await fetch("http://localhost:5000/food-category", {
+    const response = await fetch("http://localhost:5001/food-category", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export function Categories() {
   };
 
   async function fetchAll() {
-    const res = await fetch(`http://localhost:5000/food-category`, {
+    const res = await fetch(`http://localhost:5001/food-category`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -32,15 +32,22 @@ export function Categories() {
 
     const data = await res.json();
     setCategories(data);
+    console.log(data)
   }
   useEffect(() => {
     fetchAll();
   }, []);
   return (
-    <div className="">
+    <div className="bg-[#F7F7F7] w-screen h-full flex justify-center ">
+     <div className="bg-[#FFFFFF] w-11/12 mt-20 rounded-xl h-[180px]  ">
+      <div className="mt-6 ml-10 mb-6"><p className="text-[#09090B] text-[20px] font-bold">Dishes category</p></div>
+     <div className="flex">
       {categories?.map((category) => (
-        <div key={category._id}>{category.categoryName}</div>
+        <div key={category._id} className="border bg-[#FFFFFF] text-[14px] rounded-full flex justify-center items-center ml-4 ">{category.categoryName}</div>
       ))}
+        <div><button onClick={addCategory} className="bg-[#EF4444] w-12 h-12 rounded-full text-[#ffffff]">+</button></div> 
+      </div>
+     </div>
     </div>
   );
 }
