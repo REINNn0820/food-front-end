@@ -1,4 +1,5 @@
 "use client";
+import MenuSection from "./MenuSection";
 import { useState, useEffect } from "react";
 
 type CategoryType = {
@@ -38,7 +39,7 @@ export function Categories() {
     fetchAll();
   }, []);
   return (
-    <div className="bg-[#F7F7F7]  h-full flex justify-center ">
+    <div className=" flex justify-center ">
       <div className="bg-[#FFFFFF] w-11/12 mt-20 rounded-xl h-[180px]  ">
         <div className="mt-6 ml-10 mb-6">
           <p className="text-[#09090B] text-[20px] font-bold">
@@ -63,7 +64,9 @@ export function Categories() {
             </button>
           </div>
         </div>
+        <div className="bg-[#ffffff] mt-16 rounded-xl"><MenuSection /></div>
       </div>
+      
     </div>
   );
 }
