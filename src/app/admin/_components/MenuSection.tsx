@@ -1,5 +1,12 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@radix-ui/react-dialog";
 
 type Food = {
   _id: string;
@@ -11,9 +18,18 @@ type Food = {
 
 const FoodSection: React.FC = () => {
   const [foods, setFoods] = useState<Food[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openUploader = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeUploader = () => {
+    setIsDialogOpen(false);
+  };
 
   async function fetchAll() {
-    const res = await fetch(`http://localhost:5001/food-category`, {
+    const res = await fetch(`http://localhost:5001/food`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -31,14 +47,27 @@ const FoodSection: React.FC = () => {
 
   return (
     <div className="p-4 w-11/12  ">
+      {isDialogOpen && (
+        <Dialog>
+          <DialogTrigger onClick={closeUploader}>Close</DialogTrigger>
+          <DialogContent>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogContent>
+        </Dialog>
+      )}
       <h2 className="text-xl font-bold mb-4">Appetizers ({foods.length})</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Add new dish card */}
-        <div className="border-2 border-dashed border-red-500 flex items-center justify-center p-4 rounded-md">
+        <div
+          onClick={openUploader}
+          className="border-2 border-dashed border-red-500 flex items-center justify-center p-4 rounded-md"
+        >
           <button className="text-red-500 font-medium">+ Add new Dish</button>
         </div>
 
-        {/* Render foods */}
         {foods.map((food) => (
           <div
             key={food._id}
