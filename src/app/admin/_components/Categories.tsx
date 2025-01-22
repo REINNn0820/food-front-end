@@ -64,9 +64,8 @@ export function Categories() {
             </button>
           </div>
         </div>
-        <div className="bg-[#ffffff] mt-16 rounded-xl"><MenuSection /></div>
+        <div className="bg-[#ffffff] mt-16 rounded-xl"></div>
       </div>
-      
     </div>
   );
 }
