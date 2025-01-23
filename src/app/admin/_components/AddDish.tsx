@@ -12,17 +12,19 @@ import { Button } from "@/components/ui/button";
 import { Plus, Image } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CategoryType } from "./Dishes";
+import { FoodType } from "./FilteredFood";
 
 interface AddDishProps {
   categoryName: string;
   _id: string;
+  setFoods: Dispatch<SetStateAction<FoodType[]>> | undefined;
 }
 
-export const AddDish = ({ categoryName, _id }: AddDishProps) => {
+export const AddDish = ({ categoryName, _id, setFoods }: AddDishProps) => {
   const [food, setFood] = useState({
-    foodName: "",
+    name: "",
     price: 0,
     ingredients: "",
     image: "",
@@ -30,7 +32,7 @@ export const AddDish = ({ categoryName, _id }: AddDishProps) => {
   });
 
   const addDish = async () => {
-    await fetch("http://localhost:5001/food/", {
+    const response = await fetch("http://localhost:5001/food/", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -38,18 +40,19 @@ export const AddDish = ({ categoryName, _id }: AddDishProps) => {
       method: "POST",
       body: JSON.stringify(food),
     });
+    const newFood = await response.json();
+
+    console.log(newFood);
+    setFoods && setFoods((prev) => [...prev, newFood]);
   };
 
   const onChange = (e: any) => {
-    console.log("--", e.target.foodName, e.target.value);
+    console.log("--", e.target.name, e.target.value);
     setFood({
       ...food,
-      [e.target.foodName]: e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
-  useEffect(() => {
-    addDish();
-  }, []);
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -60,7 +63,7 @@ export const AddDish = ({ categoryName, _id }: AddDishProps) => {
       data.append("upload_preset", "food-delivery");
 
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dmsoxozir/upload`,
+        `https://api.cloudinary.com/v1_1/dg1tgxuba/upload`,
         {
           method: "POST",
           body: data,
@@ -93,9 +96,9 @@ export const AddDish = ({ categoryName, _id }: AddDishProps) => {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="foodName">Food name</Label>
             <Input
-              value={food.foodName}
+              value={food.name}
               id="foodName"
-              name="foodName"
+              name="name"
               type="text"
               placeholder="Type food name..."
               onChange={onChange}
@@ -128,7 +131,7 @@ export const AddDish = ({ categoryName, _id }: AddDishProps) => {
           <h1 className="text-sm">Food image</h1>
           {food.image !== "" ? (
             <div
-              className={`bg-cover bg-center rounded-md h-[138px] `}
+              className={`w-full h-[135px] object-cover object-center rounded-t-3xl `}
               style={{ backgroundImage: `url(${food.image})` }}
             ></div>
           ) : (

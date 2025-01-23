@@ -3,7 +3,7 @@ import { Dishes } from "./_components/Dishes";
 
 export default function Page() {
   return (
-    <div className="w-full bg-[#F7F7F7] ">
+    <div className=" bg-[#F7F7F7] ">
       <Categories />
       <Dishes />
     </div>

@@ -38,6 +38,9 @@ export function Categories() {
   useEffect(() => {
     fetchAll();
   }, []);
+  if (!categories) {
+    return <div>loading</div>;
+  }
   return (
     <div className=" flex justify-center ">
       <div className="bg-[#FFFFFF] w-11/12 mt-20 rounded-xl h-[180px]  ">

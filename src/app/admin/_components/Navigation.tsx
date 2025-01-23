@@ -16,7 +16,7 @@ export const Navigation = () => {
   const isSelectedSettings =
     splitedName[2] === "settings" && "bg-primary text-primary-foreground";
   return (
-    <div className="h-full py-9 px-5 flex flex-col gap-10 bg-background ">
+    <div className="h-screen py-9 px-5 flex flex-col gap-10 bg-background ">
       <Link href={`/`}>
         <div className="flex gap-2 ">
           <div>
