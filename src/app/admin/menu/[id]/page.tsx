@@ -1,11 +1,10 @@
 "use client";
-import { Categories } from "../../_components/Categories";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dishes } from "../../_components/Dishes";
-import { useParams } from "next/navigation";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useParams } from "next/navigation";
+import { Dishes } from "../../_components/Dishes";
+import { Categories } from "../../_components/Categories";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { SkeletonCard } from "../../_components/SkeletonCard";
 
 export default function Home() {
@@ -15,19 +14,8 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
-
   return (
     <div className=" w-[100%] pl-6 pr-10 py-6 flex flex-col gap-6 overflow-scroll">
-      {loading ? (
-        <>
-          <SkeletonCard width="100%" height="135px" borderRadius="8px" />
-          <SkeletonCard width="60%" height="20px" borderRadius="4px" />
-          <SkeletonCard width="40%" height="16px" borderRadius="4px" />
-          <SkeletonCard width="80%" height="16px" borderRadius="4px" />
-        </>
-      ) : (
-        ""
-      )}
       <div className=" flex flex-col gap-6">
         <div className="flex justify-end">
           <Avatar>
@@ -35,11 +23,27 @@ export default function Home() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <Categories />
+
+        {loading ? (
+          <>
+            <div className="flex justify-center"><SkeletonCard width="92%" height="120px" borderRadius="8px" /></div>
+          </>
+        ) : (
+          <div className="flex justify-center"><Categories /></div>
+        )}
       </div>
-      <div>
-        <Dishes />
-      </div>
+      {loading ? (
+          <>
+            <div className="flex justify-center"><SkeletonCard width="92%" height="350px" borderRadius="8px" /></div>
+
+           
+          </>
+        ) : (
+          <div className="flex justify-center">
+          <Dishes />
+        </div>
+        )}
+      
     </div>
   );
 }

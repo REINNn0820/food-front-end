@@ -1,74 +1,102 @@
 "use client";
-import MenuSection from "./MenuSection";
-import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Plus, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
-type CategoryType = {
-  categoryName: string;
-  _id: number;
-};
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { useAuthFetch } from "@/app/(Hooks)/FetchData";
 
-export function Categories() {
-  const [categories, setCategories] = useState<CategoryType[]>([]);
+export const Categories = () => {
+  const foodCategory = useAuthFetch("food-category");
+  const [newCategory, setNewCategory] = useState<string>();
 
-  const addCategory = async () => {
-    const response = await fetch("http://localhost:5001/food-category", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ categoryName: "New category" }),
-    });
-    const data = await response.json();
-    setCategories([...categories, data.newItem]);
-  };
-
-  async function fetchAll() {
-    const res = await fetch(`http://localhost:5001/food-category`, {
-      method: "GET",
+  const addCategory = () => {
+    fetch("http://localhost:5001/food-category/", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      method: "POST",
+      body: JSON.stringify({ categoryName: newCategory }),
     });
+    setNewCategory("");
+  };
 
-    const data = await res.json();
-    setCategories(data);
-    console.log(data);
-  }
-  useEffect(() => {
-    fetchAll();
-  }, []);
-  if (!categories) {
-    return <div>loading</div>;
-  }
   return (
-    <div className=" flex justify-center ">
-      <div className="bg-[#FFFFFF] w-11/12 mt-20 rounded-xl h-[180px]  ">
-        <div className="mt-6 ml-10 mb-6">
-          <p className="text-[#09090B] text-[20px] font-bold">
-            Dishes category
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-4">
-          {categories?.map((category) => (
-            <div
-              key={category._id}
-              className="border bg-[#FFFFFF] text-[14px] rounded-full flex justify-center items-center pl-6 pr-6 ml-6"
-            >
-              {category.categoryName}
+    <div className=" w-11/12 p-6 rounded-xl  flex flex-col gap-4 bg-background ">
+      <h4 className=" text-xl font-semibold  ">Dishes Category</h4>
+      <div className="flex flex-wrap gap-3 ">
+        <Link href={`/admin/menu`}>
+          <Badge
+            variant="outline"
+            className=" rounded-full border py-2 px-4 flex gap-2 text-sm font-medium "
+          >
+            All dishes
+          </Badge>
+        </Link>
+        {foodCategory?.map((category) => {
+          return (
+            <Link href={`/admin/menu/${category._id}`} key={category._id}>
+              <Badge
+                variant="outline"
+                className=" rounded-full border py-2 px-4 flex gap-2 text-sm font-medium "
+              >
+                {category.categoryName}
+              </Badge>
+            </Link>
+          );
+        })}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="destructive" className="rounded-full  p-[10px]">
+              <Plus />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="flex flex-col gap-6 w-[460px] p-6">
+            <DialogHeader className="pb-4">
+              <DialogTitle>Add new category</DialogTitle>
+            </DialogHeader>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="categoryName">Category name</Label>
+              <Input
+                id="categoryName"
+                type="text"
+                className="w-[412px]"
+                placeholder="Type category name..."
+                onChange={(e) => setNewCategory(e.target.value)}
+                required
+                pattern="[A-Za-z]"
+              />
             </div>
-          ))}
-          <div>
-            <button
-              onClick={addCategory}
-              className="bg-[#EF4444] w-6 h-6 rounded-full text-[#ffffff]"
-            >
-              +
-            </button>
-          </div>
-        </div>
-        <div className="bg-[#ffffff] mt-16 rounded-xl"></div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    if (newCategory) {
+                      addCategory();
+                    }
+                  }}
+                >
+                  Add category
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
-}
+};

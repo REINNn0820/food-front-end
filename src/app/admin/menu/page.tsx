@@ -26,15 +26,24 @@ export default function Home() {
 
         {loading ? (
           <>
-            <SkeletonCard width="1180px" height="180px" borderRadius="8px" />
+            <div className="flex justify-center "><SkeletonCard width="92%" height="120px" borderRadius="8px" /></div>
           </>
         ) : (
-          <Categories />
+          <div className="flex justify-center"><Categories /></div>
         )}
       </div>
-      <div>
-        <Dishes />
-      </div>
+      {loading ? (
+          <>
+            <div className="flex justify-center"><SkeletonCard width="92%" height="350px" borderRadius="8px" /></div>
+            <div className="flex justify-center"><SkeletonCard width="92%" height="350px" borderRadius="8px" /></div>
+            <div className="flex justify-center"><SkeletonCard width="92%" height="350px" borderRadius="8px" /></div>
+          </>
+        ) : (
+          <div className="flex justify-center">
+          <Dishes />
+        </div>
+        )}
+      
     </div>
   );
 }
