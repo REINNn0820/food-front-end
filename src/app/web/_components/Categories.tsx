@@ -5,7 +5,7 @@ import Link from "next/link";
 export const Categories = () => {
   const categories = useAuthFetch("food-category");
   return (
-    <div className="py-8 flex flex-col gap-9">
+    <div className="py-8 flex flex-col gap-9 ">
       <h1 className="text-3xl font-semibold text-primary-foreground">
         Categories
       </h1>
