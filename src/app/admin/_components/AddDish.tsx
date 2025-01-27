@@ -41,9 +41,8 @@ export const AddDish = ({ categoryName, _id, setFoods }: AddDishProps) => {
       body: JSON.stringify(food),
     });
     const newFood = await response.json();
-
-    console.log(newFood);
     setFoods && setFoods((prev) => [...prev, newFood]);
+    console.log(newFood);
   };
 
   const onChange = (e: any) => {

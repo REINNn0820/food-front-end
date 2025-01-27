@@ -13,13 +13,25 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/Input";
 import { FoodType } from "./FilteredFood";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export const EditDish = ({ food, id }: { food: FoodType; id: string }) => {
+interface editDishProps {
+  setFoods: any;
+}
+
+export const EditDish = ({
+  food,
+  id,
+  setFoods,
+}: {
+  food: FoodType;
+  id: string;
+  setFoods: Dispatch<SetStateAction<FoodType[]>>;
+}) => {
   const [editFood, setEditFood] = useState<FoodType>(food);
 
   const editDish = async () => {
-    await fetch(`http://localhost:5001/food/${food._id}`, {
+    const response = await fetch(`http://localhost:5001/food/${food._id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -27,6 +39,12 @@ export const EditDish = ({ food, id }: { food: FoodType; id: string }) => {
       method: "PUT",
       body: JSON.stringify(editFood),
     });
+    const newFood = await response.json();
+    setFoods &&
+      setFoods((prev) => {
+        const notEditedFoods = prev.filter((f) => f._id !== food._id);
+        return [...notEditedFoods, newFood];
+      });
   };
 
   const onChange = (e: any) => {
@@ -70,6 +88,12 @@ export const EditDish = ({ food, id }: { food: FoodType; id: string }) => {
       },
       method: "DELETE",
     });
+
+    setFoods &&
+      setFoods((prev) => {
+        const updatedFoods = prev.filter((item) => item._id !== food._id);
+        return updatedFoods;
+      });
   };
 
   return (

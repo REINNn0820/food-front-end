@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import React from "react";
 import { EditDish } from "./EditDish";
 
-export const CardComp = ({ food, id }: any) => {
+export const CardComp = ({ food, id, setFoods }: any) => {
   return (
     <Card className="bg-white w-[270px] h-[241px] rounded-3xl border relative">
       <div>
@@ -26,7 +26,7 @@ export const CardComp = ({ food, id }: any) => {
         </p>
       </div>
       <div className="absolute top-16 right-6">
-        <EditDish food={food} id={id} />
+        <EditDish food={food} id={id} setFoods={setFoods} />
       </div>
     </Card>
   );
