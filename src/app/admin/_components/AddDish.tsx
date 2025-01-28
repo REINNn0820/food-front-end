@@ -68,6 +68,7 @@ export const AddDish = ({ categoryName, _id, setFoods }: AddDishProps) => {
           body: data,
         }
       );
+      console.log(response);
 
       const dataJson = await response.json();
       setFood((prev: any) => ({ ...prev, image: dataJson.secure_url }));

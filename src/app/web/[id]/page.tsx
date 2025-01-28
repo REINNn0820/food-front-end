@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Categories } from "../_components/Categories";
+import { Dishes } from "../_components/Dishes";
 
 export default function Web() {
   return (
@@ -11,6 +12,7 @@ export default function Web() {
       ></div>
       <div className="px-[240px] bg-[#404040]">
         <Categories />
+        <Dishes />
       </div>
     </div>
   );
