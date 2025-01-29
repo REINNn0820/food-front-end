@@ -23,10 +23,6 @@ export const Dishes = () => {
   const foodCategory: CategoryType[] = useAuthFetch("food-category") || [];
   const foods: FoodType[] = useAuthFetch("food") || [];
 
-  //   const grouped = Object.groupBy(food, ({ category }) => category);
-
-  //   console.log(grouped)
-
   if (!foods || foods.length === 0) return null;
 
   return (
