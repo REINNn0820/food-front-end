@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <>
       <SignedOut>
         <main className="h-screen flex items-center justify-center ">
           <div className="w-[1000px] flex flex-col gap-6">
@@ -54,6 +54,6 @@ export default function RootLayout({
           </div>
         </div>
       </SignedIn>
-    </ClerkProvider>
+    </>
   );
 }

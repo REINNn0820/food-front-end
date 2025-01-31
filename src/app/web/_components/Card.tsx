@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import React from "react";
+import { AddOrder } from "./AddOrder";
 
 export const CardComp = ({ food, id, setFoods }: any) => {
   return (
@@ -26,7 +27,7 @@ export const CardComp = ({ food, id, setFoods }: any) => {
       </div>
       <div className="absolute top-40 right-8   ">
         <div className="h-[44px] w-[44px] rounded-full bg-white flex justify-center items-center text-[28px] text-[#EF4444]">
-          +
+          <AddOrder food={food} id={id} />
         </div>
       </div>
     </Card>

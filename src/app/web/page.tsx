@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Categories } from "../_components/Categories";
-import { Dishes } from "../_components/Dishes";
-import Footer from "../_components/Footer";
-import { Header } from "../_components/Header";
+import { Categories } from "./_components/Categories";
+import { Dishes } from "./_components/Dishes";
+import Footer from "./_components/Footer";
+import { Header } from "./_components/Header";
 
 export default function Home() {
   return (
